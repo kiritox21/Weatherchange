@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ESP32 Sensor Data</title>
+  <meta http-equiv="refresh" content="5">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 50px;
+    }
+    .card {
+      width: 200px;
+      height: 200px;
+      background-color: #fff;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .card h2 {
+      margin-top: 0;
+    }
+    .card p {
+      margin: 0;
+      font-size: 40px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>ESP32 Sensor Data</h1>
+  <div class="container">
+    <div class="card">
+      <h2>Temperature</h2>
+      <p><?php echo $_GET["temperature"]; ?>&deg;C</p>
+    </div>
+    <div class="card">
+      <h2>Humidity</h2>
+      <p><?php echo $_GET["humidity"]; ?>%</p>
+    </div>
+    <div class="card">
+      <h2>Pressure</h2>
+      <p><?php echo $_GET["pressure"]; ?>hPa</p>
+    </div>
+  </div>
+
+  <script>
+    function updateData() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          console.log("Data updated");
+        }
+      };
+      xhttp.open("GET", "/update", true);
+      xhttp.send();
+    }
+
+    setInterval(updateData, 5000);
+  </script>
+
+</body>
+</html>
